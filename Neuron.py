@@ -5,12 +5,19 @@ import numpy as np
 
 def sigmod(x):
     return 1 / (1 + np.exp(-x))
+def deriv_sigmod(x):
+    return sigmod(x) * (1 - sigmod(x))
+
+def mess_loss(y_true, y_pred):
+    return ((y_true - y_pred) ** 2).mean()
 
 class neuron:
     def __init__(self, w, b):
         self.w = w
         self.b = b
-
+    def update(self, w, b):
+        self.w = w
+        self.b = b
     def feedforward(self, x):
         return sigmod(np.dot(self.w, x) + self.b)
 
@@ -29,6 +36,5 @@ class ourNeuralNetwork:
 
         return self.o1.feedforward(np.array([h1Out, h2Out]))
 
-def mess_loss(y_true, y_pred):
-    return ((y_true - y_pred) ** 2).mean()
+
 
